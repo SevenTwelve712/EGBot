@@ -30,6 +30,14 @@ class Symbol:
         self.sym = sym
         self.index = self.font_sizes['size'].index(size) # индекс символа в списке размеров
 
+        self.ratio = 0 # соотношение высоты буквы к ее "хвостику": выносному графическому элементу, который не входит в высоту буквы
+        if sym in 'руф':
+            self.ratio = 3 / 7
+        elif sym in 'ЦЩ':
+            self.ratio = 2 / 7
+        elif sym in 'Дщц':
+            self.ratio = 1 / 7
+
 
     def get_width(self):
         for key in self.font_sizes.keys():
