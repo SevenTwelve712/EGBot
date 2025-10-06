@@ -1,20 +1,21 @@
-import asyncio
-
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message, BufferedInputFile
+import logging
 
-from word import EGWord
+from conf import Conf
+from model.eg_word import EGWord
 
 from dotenv import load_dotenv
-import os, os.path
+import os.path
 
 dp = Dispatcher()
 
 @dp.message(CommandStart())
 async def start(m: Message):
+    logging.debug(f"user {m.from_user.username} with id {m.from_user.id} started bot")
     await m.reply('Введите предложение и через пробел размер шрифта (дробные числа вводите через точку)')
 
 @dp.message(lambda m: m.text)
@@ -34,20 +35,19 @@ async def return_img(m: Message):
         await m.reply(str(e))
         return
     file = BufferedInputFile(text.get_binary_img(), filename="img.png")
+    logging.debug(f"user {m.from_user.username} with id {m.from_user.id} get correct file")
     await m.bot.send_document(m.chat.id, file)
     return
 
 
-async def main() -> None:
-    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    await bot.delete_webhook(drop_pending_updates=True)
-    print('bot_started')
-    await dp.start_polling(bot)
+async def run_bot() -> None:
+    if not os.path.exists(f'{Conf.project_path}/secrets.env'):
+        logging.critical(f"cant find secrets env! finishing work")
+        return
 
-
-if __name__ == "__main__":
-    if not os.path.exists('secrets.env'):
-        raise FileNotFoundError('secrets.env must be in the working directory')
     load_dotenv('secrets.env')
     TOKEN = os.getenv("EGBOTTOKEN")
-    asyncio.run(main())
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    await bot.delete_webhook(drop_pending_updates=True)
+    logging.info('bot started')
+    await dp.start_polling(bot)
