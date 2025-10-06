@@ -1,11 +1,9 @@
 import asyncio
 import logging
 from logging.handlers import RotatingFileHandler
-from time import sleep
-
-from conf import Conf
 
 from bot import run_bot
+from conf import Conf
 
 
 async def flush_handler(handler):

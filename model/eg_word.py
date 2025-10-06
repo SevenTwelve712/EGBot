@@ -1,7 +1,7 @@
+from io import BytesIO
 from math import ceil
 
 from PIL import Image, ImageDraw, ImageFont
-from io import BytesIO
 
 from conf import Conf
 from model.eg_sym_img import cnt_textbox_sizes, EGSymImg

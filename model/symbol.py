@@ -14,7 +14,7 @@ class Symbol:
         ' ': [1.1, 1.5, 2.1, 3, 4.2, 6, 8.4, 12],
         'gap': [0.35, 0.5, 0.7, 1, 1.4, 2, 2.8, 4],
         'с': [0.8, 1, 1.4, 2, 2.8, 4, 5.6, 8],
-        'абвгдеийклнопрухцчьэя': [0.9, 1.25, 1.75, 2.5, 3.5, 5, 7, 10],
+        'абвгдеийклнопрухцчьэяз': [0.9, 1.25, 1.75, 2.5, 3.5, 5, 7, 10],
         'мъыю': [1.1, 1.5, 2.1, 3, 4.2, 6, 8.4, 12],
         'жтфшщ': [1.3, 1.8, 2.5, 3.5, 5, 7, 10, 14]
     }
@@ -22,7 +22,7 @@ class Symbol:
     def __init__(self, sym: str, size: float):
         # Проверка входных дынных
         if size not in self.font_sizes['size']:
-            raise ValueError(f'Size {size} not exists in font sizes table')
+            raise ValueError(f'Size {size} not exists in font sizes')
         if all(sym not in key for key in self.font_sizes.keys()):
             raise ValueError(f'Sym {sym} not exists in font sizes table')
 

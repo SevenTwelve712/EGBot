@@ -1,4 +1,5 @@
 from PIL import ImageFont, ImageDraw, Image
+
 from conf import Conf
 from model.symbol import Symbol
 
